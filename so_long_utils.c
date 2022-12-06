@@ -32,11 +32,9 @@ int	verifber(char *file)
 */
 int	verifchar(char *file)
 {
-	int		i;
 	int 	fd;
 	char	*gnl;
 	
-	i = 0;
 	fd = open(file, O_RDONLY);
 	gnl = get_next_line(fd);
 	printf("%s", gnl);

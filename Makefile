@@ -12,10 +12,11 @@ ${NAME} : ${OBJS}
 	gcc ${CFLAGS} ${SRC} ./Libft/libft.a -o so_long
 
 clean :
-	rm -f ${OBJS} ${OBJS_BONUS}
+	rm -f ${OBJS}
 
 fclean : clean
 	rm -f ./so_long
+	make fclean -C ./Libft
 
 re : fclean all
 
