@@ -1,6 +1,7 @@
 NAME = so_long
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g
+
 SRC = ./so_long_utils.c ./main.c
 
 all : ${NAME}

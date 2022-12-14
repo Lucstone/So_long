@@ -6,7 +6,7 @@
 /*   By: lnaidu <lnaidu@student.42nice.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 13:37:18 by lnaidu            #+#    #+#             */
-/*   Updated: 2022/12/05 17:13:52 by lnaidu           ###   ########.fr       */
+/*   Updated: 2022/12/08 16:30:44 by lnaidu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include <math.h>
 
 int	verifber(char *file);
-int	verifchar(char *file);
+int	verifchar(char *file, int fd);
+int	verifsize(int fd);
+int	verifwall(int fd);
 
 #endif
