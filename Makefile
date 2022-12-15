@@ -1,7 +1,6 @@
 NAME = so_long
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g
-
+CFLAGS = -Wall -Wextra -Werror
 SRC = ./so_long_utils.c ./main.c
 
 all : ${NAME}
@@ -10,14 +9,15 @@ OBJS = ${SRC:.c=.o}
 
 ${NAME} : ${OBJS}
 	make all bonus -C ./Libft
-	gcc ${CFLAGS} ${SRC} ./Libft/libft.a -o so_long
+	${CC} ${CFLAGS} ${SRC} ./Libft/libft.a -o $(NAME)
 
 clean :
 	rm -f ${OBJS}
 
 fclean : clean
 	rm -f ./so_long
-	make fclean -C ./Libft
+	make fclean -C ./Libft 
+	make fclean -C ./mlx
 
 re : fclean all
 

@@ -6,7 +6,7 @@
 /*   By: lnaidu <lnaidu@student.42nice.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 14:27:21 by lnaidu            #+#    #+#             */
-/*   Updated: 2022/12/08 18:22:00 by lnaidu           ###   ########.fr       */
+/*   Updated: 2022/12/15 17:23:22 by lnaidu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,19 +57,22 @@ int	verifchar(char *file, int fd)
 		i = 0;
 	}
 	return (1);
-}
+}*/
 
 int	verifsize(int fd)
 {
 	char	*gnl;
 	char	*tmp;
 	size_t	i;
+	int		j;
 
 	gnl = get_next_line(fd);
 	tmp = ft_strtrim(gnl, "\n");
 	i = ft_strlen(tmp);
+	j = 0;
 	while (gnl != '\0')
 	{
+		j++;
 		if (tmp != 0 && i != ft_strlen(tmp))
 		{
 			perror("Error\n Not a rectangle");
@@ -78,29 +81,37 @@ int	verifsize(int fd)
 		gnl = get_next_line(fd);
 		tmp = ft_strtrim(gnl, "\n");
 	}
-	return (1);
+	return (j);
 }
-*/
+
 int lengnl (int fd)
 {
 	char	*gnl;
-	int		i;
+	int		j;
 
-	i = 0;
 	gnl = get_next_line(fd);
-	while (gnl)
-		i++;
-	return(i);
+	j = 0;
+	while (gnl != '\0')
+	{
+		j++;
+		gnl = get_next_line(fd);
+	}
+	return (j);
 }
+
 int	verifwall(int fd)
 {
 	char	*gnl;
 	int		i;
+	int		k;
 	int		j;
-	char	*tmp;
+	int		n;
 
 	gnl = get_next_line(fd);
 	i = ft_strlen(gnl);
+	n = lengnl(fd);
+	k = n;
+	printf("**%d**\n",k);
 	j = 0;
 	while (gnl && (i - 1) > j)
 	{
@@ -111,28 +122,26 @@ int	verifwall(int fd)
 		}
 		j++;	
 	}
-	gnl = get_next_line(fd);
-	j = lengnl(fd);
-	while (gnl)
+	while (gnl && (k - 1) > 0)
 	{
-		if (gnl[0] != '1' || gnl[i - 2] != '1')
+		gnl = get_next_line(fd);
+		k--;
+		if (gnl && (gnl[0] != '1' || gnl[i - 2] != '1'))
 		{
 			perror("Error2\n No Walls valid");
 			return (EXIT_FAILURE);
 		}
-		gnl = get_next_line(fd);
 	}
+	gnl = get_next_line(fd);
 	j = 0;
-	printf("%s\n", gnl);
 	while (gnl && (i - 1) > j)
 	{
 		if (gnl && gnl[j] != '1' && gnl[j] != '\n')
 		{
-			perror("Error\n No Walls valid");
+			perror("Error3\n No Walls valid");
 			return (EXIT_FAILURE);
 		}
 		j++;	
 	}
-	printf("tetst");
 	return (1);
 }
