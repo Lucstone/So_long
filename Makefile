@@ -1,7 +1,7 @@
 NAME = so_long
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
-SRC = ./so_long_utils.c ./main.c
+SRC = ./so_long_utils.c ./main.c ./So_long_errors2.c
 
 all : ${NAME}
 
@@ -17,7 +17,6 @@ clean :
 fclean : clean
 	rm -f ./so_long
 	make fclean -C ./Libft 
-	make fclean -C ./mlx
 
 re : fclean all
 

@@ -6,7 +6,7 @@
 /*   By: lnaidu <lnaidu@student.42nice.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 13:37:18 by lnaidu            #+#    #+#             */
-/*   Updated: 2022/12/16 17:20:03 by lnaidu           ###   ########.fr       */
+/*   Updated: 2022/12/16 18:18:01 by lnaidu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,6 @@ int	verifchar(char *file, int fd);
 int	verifsize(int fd);
 int	verifwall(int fd, int k);
 int	lengnl(int fd);
+int	topend(char *gnl, int i, int j);
 
 #endif
