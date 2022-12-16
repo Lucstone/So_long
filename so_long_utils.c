@@ -6,13 +6,13 @@
 /*   By: lnaidu <lnaidu@student.42nice.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 14:27:21 by lnaidu            #+#    #+#             */
-/*   Updated: 2022/12/15 17:23:22 by lnaidu           ###   ########.fr       */
+/*   Updated: 2022/12/16 17:21:46 by lnaidu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "So_long.h"
 
-/*int	verifber(char *file)
+int	verifber(char *file)
 {
 	int		i;
 
@@ -57,7 +57,7 @@ int	verifchar(char *file, int fd)
 		i = 0;
 	}
 	return (1);
-}*/
+}
 
 int	verifsize(int fd)
 {
@@ -70,7 +70,7 @@ int	verifsize(int fd)
 	tmp = ft_strtrim(gnl, "\n");
 	i = ft_strlen(tmp);
 	j = 0;
-	while (gnl != '\0')
+	while (gnl)
 	{
 		j++;
 		if (tmp != 0 && i != ft_strlen(tmp))
@@ -84,14 +84,14 @@ int	verifsize(int fd)
 	return (j);
 }
 
-int lengnl (int fd)
+int	lengnl(int fd)
 {
 	char	*gnl;
 	int		j;
 
 	gnl = get_next_line(fd);
 	j = 0;
-	while (gnl != '\0')
+	while (gnl)
 	{
 		j++;
 		gnl = get_next_line(fd);
@@ -99,19 +99,14 @@ int lengnl (int fd)
 	return (j);
 }
 
-int	verifwall(int fd)
+int	verifwall(int fd, int k)
 {
 	char	*gnl;
 	int		i;
-	int		k;
 	int		j;
-	int		n;
 
 	gnl = get_next_line(fd);
 	i = ft_strlen(gnl);
-	n = lengnl(fd);
-	k = n;
-	printf("**%d**\n",k);
 	j = 0;
 	while (gnl && (i - 1) > j)
 	{
@@ -120,9 +115,9 @@ int	verifwall(int fd)
 			perror("Error\n No Walls valid");
 			return (EXIT_FAILURE);
 		}
-		j++;	
+		j++;
 	}
-	while (gnl && (k - 1) > 0)
+	while (gnl && (k - 2) > 0)
 	{
 		gnl = get_next_line(fd);
 		k--;
@@ -141,7 +136,7 @@ int	verifwall(int fd)
 			perror("Error3\n No Walls valid");
 			return (EXIT_FAILURE);
 		}
-		j++;	
+		j++;
 	}
 	return (1);
 }
