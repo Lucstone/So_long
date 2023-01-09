@@ -1,7 +1,7 @@
 NAME = so_long
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g
-SRC = ./so_long_utils.c ./main.c ./So_long_errors2.c
+SRC = ./utils_error1.c  ./verifdobl.c ./array.c ./windows.c ./checkerror.c ./main.c
 
 all : ${NAME}
 

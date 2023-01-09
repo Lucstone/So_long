@@ -1,40 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   checkerror.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lnaidu <lnaidu@student.42nice.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/09 13:55:24 by lnaidu            #+#    #+#             */
-/*   Updated: 2023/01/09 18:33:45 by lnaidu           ###   ########.fr       */
+/*   Created: 2023/01/04 13:29:52 by lnaidu            #+#    #+#             */
+/*   Updated: 2023/01/09 14:43:19 by lnaidu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "So_long.h"
 
-int	main(int argc, char **argv)
+int	checkerror(char **argv)
 {
-	int			fd;
-	int			k;
-	char		**tab;
-	//t_data		*img;
+	int	fd;
+	int	k;
 
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0)
 	{
-		ft_printf("Error\nfile not available");
+		ft_printf("Error\nFile not available");
 		return (0);
 	}
-	if (checkerror(argv) == 1)
-		return (0);
-	if (argc == 2)
-	{
-		k = lengnl(fd);
-		close (fd);
-		tab = array(fd, k, argv[1]);
-		ft_printmap(tab);
-		ft_windows((k), ft_strlen(tab[1]), (tab));
-	}
-	//system("leaks so_long");
+	if (verifber(argv[1]) == 0)
+		return (1);
+	if (verifchar(argv[1], fd) == 0)
+		return (1);
+	if (verifdbl(argv[1], fd) == 0)
+		return (1);
+	k = verifsize(fd);
+	if (k < 3)
+		return (1);
+	close (fd);
+	fd = open(argv[1], O_RDONLY);
+	if (verifwall (fd, k) == 0)
+		return (1);
 	return (0);
 }
