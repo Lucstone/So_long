@@ -6,7 +6,7 @@
 /*   By: lnaidu <lnaidu@student.42nice.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 13:37:18 by lnaidu            #+#    #+#             */
-/*   Updated: 2023/01/09 18:45:47 by lnaidu           ###   ########.fr       */
+/*   Updated: 2023/01/10 19:02:34 by lnaidu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,10 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <ctype.h>
+
+# ifndef ANIMATION_FRAMES
+#  define ANIMATION_FRAMES 10
+# endif
 
 int	verifber(char *file);
 int	verifchar(char *file, int fd);
@@ -43,42 +47,53 @@ typedef struct	s_cerror
 	int p;
 }				t_cerror;
 
+typedef struct	s_map
+{
+	int	count;
+	int coin;
+	char **map;
+}				t_map;
+
 typedef struct	s_vector
 {
 	int x;
 	int	y;
 }				t_vector;
 
-typedef struct	s_window
+typedef struct	s_window 
 {
 	void		*reference;
 	t_vector	size;
 }				t_window;
 
-typedef struct	s_data 
+typedef struct	s_image 
 {
-	void		*img;
-	char		*addr;
-	void		*mlx;
-	void		*mlx_win;
+	void		*reference;
+	t_vector	size;
+	char		*pixels;
 	int			bits_per_pixel;
 	int			line_length;
 	int			endian;
-	int			x;
-	int			y;
-	int			twidth;
-	int			theight;
-	t_vector	size;
-}				t_data;
+}				t_image;
 
-typedef struct	s_program {
+typedef struct	s_data 
+{
 	void		*mlx;
 	t_window	window;
-	t_data		sprite;
-	t_vector	sprite_position;
-}				t_program;
+	t_image		sprite;
+	t_vector	position;
+	t_map		map;
+}				t_data;
 
-void	ft_background(t_data *img, int width, int height);
-void	ft_windows(int height, int width, char **tab);
+t_window	ft_windows(void *mlx, int height, int width/*, char **tab*/);
+t_image		ft_new_sprite(void *mlx, char *path);
+void	ft_background(t_data *img, int height, int width);
+void	ft_wall(t_data *img, char **tab, int width, int height);
+int	ft_input(int key, void *param);
+int	ft_update (void *param);
+t_vector	ft_player(t_data *img, char **tab, int width, int height);
+void	ft_coin(t_data *img, char **tab, int width, int height);
+void	ft_exit(t_data *img, char **tab, int width, int height);
+int	ft_count(char **tab);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: lnaidu <lnaidu@student.42nice.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 10:47:44 by lnaidu            #+#    #+#             */
-/*   Updated: 2023/01/09 13:57:12 by lnaidu           ###   ########.fr       */
+/*   Updated: 2023/01/10 18:55:06 by lnaidu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ char	**array(int fd, int k, char *file)
 		gnl = get_next_line(fd);
 		i++;
 	}
-	ft_printf("-%c-\n", tab[0][0]);
-	ft_printf("-%c-\n", tab[2][7]);
+	/*ft_printf("-%c-\n", tab[0][0]);
+	ft_printf("-%c-\n", tab[2][7]);*/
 	tab[i] = NULL;
 	return (tab);
 }
@@ -75,4 +75,28 @@ void	**ft_printmap(char **tab)
 		i++;
 	}
 	return (0);
+}
+
+int	ft_count(char **tab)
+{
+	int	i;
+	int	j;
+	int	count;
+
+	i = 0;
+	count = 0;
+	while (tab[i])
+	{
+		j = 0;
+		while (tab[i][j])
+		{
+			if (tab[i][j] == 'C')
+				count++;
+			j++;
+		}
+		i++;
+	}
+	ft_printf("|%d|", count);
+	ft_printf("\n");
+	return (count);
 }

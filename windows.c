@@ -6,139 +6,123 @@
 /*   By: lnaidu <lnaidu@student.42nice.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 15:49:24 by lnaidu            #+#    #+#             */
-/*   Updated: 2023/01/09 18:51:42 by lnaidu           ###   ########.fr       */
+/*   Updated: 2023/01/10 18:26:03 by lnaidu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "So_long.h"
 
-void	ft_background(t_data *img, int width, int height)
+void	ft_background(t_data *img, int height, int width)
 {
-	img->img = mlx_xpm_file_to_image (img->mlx, "./sprites/floor.xpm", &width, &height);
-	img->addr = mlx_get_data_addr (img->img, &img->bits_per_pixel,
-			&img->line_length, &img->endian);
-	img->y = 0;
-	img->x = 0;
-	while (img->y < img->twidth)
+	img->sprite = ft_new_sprite(img->mlx, "./sprites/floor.xpm");
+	img->position.y = 0;
+	img->position.x = 0;
+	while (img->position.y < (height * 32))
 	{
-		while (img->x < img->theight)
+		while (img->position.x < (width * 32))
 		{
-			mlx_put_image_to_window(img->mlx,
-				img->mlx_win, img->img, img->y, img->x);
-			img->x = img->x + 32;
+			mlx_put_image_to_window(img->mlx, img->window.reference,
+				img->sprite.reference, img->position.y, img->position.x);
+			img->position.x = img->position.x + 32;
 		}
-		img->x = 0;
-		img->y = img->y + 32;
+		img->position.x = 0;
+		img->position.y = img->position.y + 32;
 	}
 }
 
-void	ft_winchar(t_data *img, char **tab, char c)
+void	ft_wall(t_data *img, char **tab, int width, int height)
 {
 	int	i;
 	int	j;
 
-	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel,
-			&img->line_length, &img->endian);
+	img->sprite = ft_new_sprite(img->mlx, "./sprites/wall.xpm");
+	img->position.y = 0;
+	img->position.x = 0;
 	i = 0;
-	img->y = 0;
-	img->x = 0;
-	while (img->y < img->theight)
+	while (img->position.y < (height * 32))
 	{
 		j = 0;
-		while (img->x < img->twidth)
+		while (img->position.x < (width * 32))
 		{
-			if (tab[i][j] == c)
-				mlx_put_image_to_window(img->mlx, img->mlx_win,
-					img->img, img->x, img->y);
-			img->x = img->x + 32;
+			if (tab[i][j] == '1')
+				mlx_put_image_to_window(img->mlx, img->window.reference,
+					img->sprite.reference, img->position.x, img->position.y);
+			img->position.x = img->position.x + 32;
 			j++;
 		}
-		img->x = 0;
-		img->y = img->y + 32;
+		img->position.x = 0;
+		img->position.y = img->position.y + 32;
 		i++;
 	}
 }
 
-
-void	ft_player3(t_data *img, char **tab, char c)
+void	ft_coin(t_data *img, char **tab, int width, int height)
 {
 	int	i;
 	int	j;
 
-	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel,
-			&img->line_length, &img->endian);
+	img->sprite = ft_new_sprite(img->mlx, "./sprites/bone.xpm");
+	img->position.y = 0;
+	img->position.x = 0;
 	i = 0;
-	img->y = 0;
-	img->x = 0;
-	while (img->y < img->theight)
+	while (img->position.y < (height * 32))
 	{
 		j = 0;
-		while (img->x < img->twidth)
+		while (img->position.x < (width * 32))
 		{
-			if (tab[i][j] == c)
-				mlx_put_image_to_window(img->mlx, img->mlx_win,
-					img->img, img->x, img->y);
-			img->x = img->x + 32;
+			if (tab[i][j] == 'C')
+				mlx_put_image_to_window(img->mlx, img->window.reference,
+					img->sprite.reference, img->position.x, img->position.y);
+			img->position.x = img->position.x + 32;
 			j++;
 		}
-		img->x = 0;
-		img->y = img->y + 32;
+		img->position.x = 0;
+		img->position.y = img->position.y + 32;
 		i++;
 	}
 }
 
-int	tclose(int keysys , t_data *vars)
+t_vector	ft_player(t_data *img, char **tab, int width, int height)
 {
-	printf("the escape button num is %d\n", keysys);
-	if (keysys == 53)
+	int			i;
+	int			j;
+	t_vector	pos;
+
+	img->sprite = ft_new_sprite(img->mlx, "./sprites/player1.xpm");
+	pos.y = 0;
+	pos.x = 0;
+	i = 0;
+	while (pos.y < (height * 32))
 	{
-		mlx_destroy_window(vars->mlx, vars->mlx_win);
-		//mlx_clear_window(vars->mlx, vars->img);
+		j = 0;
+		while (pos.x < (width * 32))
+		{
+			if (tab[i][j] == 'P')
+				return (pos);
+			pos.x = pos.x + 32;
+			j++;
+		}
+		pos.x = 0;
+		pos.y = pos.y + 32;
+		i++;
 	}
-	return (0);
+	return (pos);
 }
 
-int	ft_input(int key, void *param)
+int	ft_close(void)
 {
-	t_program *program = (t_program *)param;
-
-	// mlx function that clears the window
-	//mlx_clear_window(program->mlx, program->window.reference);
-
-	// move in a direction based on the key
-	if (key == 124)
-		program->sprite_position.x += program->sprite.size.x;
-	else if (key == 123)
-		program->sprite_position.x -= program->sprite.size.x;
-	else if (key == 125)
-		program->sprite_position.y += program->sprite.size.y;
-	else if (key == 126)
-		program->sprite_position.y -= program->sprite.size.y;
-	mlx_put_image_to_window(program->mlx, program->window.reference,
-		program->sprite.img, program->sprite_position.x, program->sprite_position.y);
-	return (0);
+	exit(0);
 }
 
-void	ft_windows(int height, int width, char **tab)
+t_window	ft_windows(void *mlx, int height, int width)
 {
-	t_data	img;
+	t_window	img;
 
 	height = height * 32;
 	width = width * 32;
-	img.theight = height;
-	img.twidth = width;
-	img.mlx = mlx_init();
-	img.mlx_win = mlx_new_window(img.mlx, width, height, "So_long42");
-	ft_background(&img, width, height);
-	img.img = mlx_xpm_file_to_image(img.mlx, "./sprites/wall.xpm", &width, &height);
-	ft_winchar(&img, tab, '1');
-	/*img.img = mlx_xpm_file_to_image(img.mlx, "./sprites/exit.xpm", &width, &height);
-	ft_winchar(&img, tab, 'E');
-	img.img = mlx_xpm_file_to_image(img.mlx, "./sprites/bone.xpm", &width, &height);
-	ft_winchar(&img, tab, 'C');*/
-	img.img = mlx_xpm_file_to_image(img.mlx, "./sprites/player1.xpm", &width, &height);
-	ft_player3(&img, tab, 'P');
-	mlx_hook(img.mlx_win, 2, 1L<<0, tclose, &img);
-	mlx_hook(img.mlx_win, 2, 1L<<0, ft_input, &img);
-	mlx_loop(img.mlx);
+	img.reference = mlx_new_window(mlx, width, height, "So_long42");
+	img.size.x = width;
+	img.size.y = height;
+	mlx_hook(img.reference, 17, 0, ft_close, 0);
+	return (img);
 }
